@@ -5,14 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.platzi.android.firestore.R
-
-/**
- * @author Santiago Carrillo
- * github sancarbar
- * 1/29/19.
- */
-
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_trader.*
 
 const val USERNAME_KEY = "username_key"
 
@@ -21,15 +17,25 @@ class LoginActivity : AppCompatActivity() {
 
     private val TAG = "LoginActivity"
 
+    // Acceso al modulo de autentificacion de firebase
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
     }
 
-
     fun onStartClicked(view: View) {
-        startMainActivity("Santiago")
+        auth.signInAnonymously()
+            .addOnCompleteListener{ task ->
+                if (task.isSuccessful){
+                val username: String = tvUsername.text.toString()
+                    startMainActivity(username)
+            }else{
+                    showErrorMessage(view)
+                }
+            }
+
 
     }
 
