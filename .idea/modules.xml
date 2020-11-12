@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/android-firestore-platzi-crypto-trade.iml" filepath="$PROJECT_DIR$/.idea/android-firestore-platzi-crypto-trade.iml" group="android-firestore-platzi-crypto-trade" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="android-firestore-platzi-crypto-trade/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/android-firestore-platzi-crypto-trade.iml" filepath="$PROJECT_DIR$/.idea/android-firestore-platzi-crypto-trade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android-firestore-platzi-crypto-trade.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android-firestore-platzi-crypto-trade.app.iml" />
     </modules>
   </component>
 </project>
