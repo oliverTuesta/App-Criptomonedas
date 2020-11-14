@@ -3,7 +3,9 @@ package com.platzi.android.firestore.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.TextureView
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -21,7 +23,6 @@ const val USERNAME_KEY = "username_key"
 
 class LoginActivity : AppCompatActivity() {
 
-
     private val TAG = "LoginActivity"
 
     // Acceso al modulo de autentificacion de firebase
@@ -38,45 +39,56 @@ class LoginActivity : AppCompatActivity() {
     fun onStartClicked(view: View) {
         view.isEnabled = false
         auth.signInAnonymously()
-            .addOnCompleteListener{ task ->
-                if (task.isSuccessful){
-                val username: String = tvUsername.text.toString().toLowerCase()
-                    firestoreService.findUserById(username, object : Callback<User>{
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val username: String = tvUsername.text.toString().toLowerCase()
+                    firestoreService.findUserById(username, object : Callback<User> {
                         override fun onSuccess(result: User?) {
-                            if (result==null){
+                            if (result == null) {
                                 val user: User = User()
                                 user.username = username
                                 saveUserAndStartMainActivity(user, view)
-                            }else{
+                            } else {
                                 startMainActivity(username)
                             }
                         }
+
                         override fun onFail(exception: Exception) {
                             showErrorMessage(view)
                         }
 
                     })
-            }else{
+                } else {
                     showErrorMessage(view)
                     view.isEnabled = true
                 }
             }
     }
+
     private fun saveUserAndStartMainActivity(user: User, view: View) {
-        firestoreService.setDocument(user, USER_COLLECTION_NAME, user.username, object: Callback<Void>{
-            override fun onSuccess(result: Void?){
-                startMainActivity(user.username)
-            }
-            override fun onFail(exception: Exception){
-                showErrorMessage(view)
-                Log.e(TAG, "error", exception)
-                view.isEnabled
-            }
-        })
+        firestoreService.setDocument(
+            user,
+            USER_COLLECTION_NAME,
+            user.username,
+            object : Callback<Void> {
+                override fun onSuccess(result: Void?) {
+                    startMainActivity(user.username)
+                }
+
+                override fun onFail(exception: Exception) {
+                    showErrorMessage(view)
+                    Log.e(TAG, "error", exception)
+                    view.isEnabled
+                }
+            })
     }
 
     private fun showErrorMessage(view: View) {
-        Snackbar.make(view, getString(R.string.error_while_connecting_to_the_server), Snackbar.LENGTH_LONG)
+        Snackbar.make(
+            view,
+            getString(R.string.error_while_connecting_to_the_server),
+            Snackbar.LENGTH_LONG
+        )
             .setAction("Info", null).show()
     }
 

@@ -21,7 +21,7 @@ class CryptosAdapter(val cryptosAdapterListener: CryptosAdapterListener) :
         var buyButton = view.findViewById<Button>(R.id.buyButton)
     }
 
-    var cryptosList = ArrayList<Crypto>()
+    var cryptosList = listOf<Crypto>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.crypto_row, parent, false)
